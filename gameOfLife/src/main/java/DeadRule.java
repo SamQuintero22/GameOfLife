@@ -6,7 +6,7 @@ public class DeadRule implements Rule{
 
     @Override
     public boolean canApply(Cell cell, int neighboursLive) {
-        return cell.isDead() && (subPoblation(cell,neighboursLive) || overPoblation(cell, neighboursLive));
+        return cell.isAlive() && (subPoblation(cell,neighboursLive) || overPoblation(cell, neighboursLive));
     }
 
     private boolean subPoblation(Cell cell, int neighboursLive){
