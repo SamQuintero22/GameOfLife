@@ -5,6 +5,7 @@ public class Game implements Subject{
       Board board; 
       List<Rule> rules;
       private List<Observer> observers;
+      private int generation;
 
     public Game(int filas, int columnas){
 
@@ -44,7 +45,19 @@ public class Game implements Subject{
     board.setCell(cell.getCoorX(), cell.getCoorY(), cell);
     }
 
-    public void mostrarTablero() throws InterruptedException{
+    public int getGeneration(){
+        
+        return generation;
+
+    }
+
+    public Board getBoard(){
+
+        return board;
+
+    }
+
+    public void mostrarTablero(){
 
     for (int i = 0; i < board.totalRows; i++) {
         for (int j = 0; j < board.totalCols; j++) {
@@ -60,7 +73,6 @@ public class Game implements Subject{
     }
 
     System.out.println(); 
-    Thread.sleep(300); // esperar 300 ms entre generaciones
 
     }
 
