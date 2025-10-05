@@ -1,7 +1,3 @@
-//Debes escribir un programa que pueda aceptar una 
-//cuadrícula arbitraria de celdas y que genere una 
-//cuadrícula similar que muestre la próxima generación.
-
 import java.util.List;
 import java.util.ArrayList;
 
@@ -30,7 +26,7 @@ public class Game {
                     board.countlivingNeighbours(filas,columnas))){
 
                         nuevoBoard.matriz[filas][columnas] = ruleActual.apply(board.matriz[filas][columnas]);
-                        break; //para no sobreescribir reglas 
+                        break; //aplico solo una regla a la vez 
                     }
 
                 }
@@ -59,10 +55,10 @@ public class Game {
 
         }
 
-        System.out.println(); // salto de línea al terminar la fila
+        System.out.println(); 
     }
 
-    System.out.println(); // espacio extra entre tableros
+    System.out.println(); 
     Thread.sleep(300); // esperar 300 ms entre generaciones
 
     }
