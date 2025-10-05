@@ -1,6 +1,5 @@
 //3. Cualquier célula viva con dos o tres vecinas vivas sobrevive a la siguiente generación.
 
-
 public class survivorRule implements Rule{
     
     int neighbours;
