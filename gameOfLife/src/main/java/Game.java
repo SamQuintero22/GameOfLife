@@ -1,9 +1,10 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements Subject{
       Board board; 
       List<Rule> rules;
+      private List<Observer> observers;
 
     public Game(int filas, int columnas){
 
@@ -92,5 +93,22 @@ public class Game {
             game.nextGeneration(); 
         }
 
+    }
+
+    @Override
+    public void registerObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        removeObserver(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observerActual : observers) {
+            observerActual.update(); //todos los observers son avisados que hubieron cambios 
+        }
     }
 }
