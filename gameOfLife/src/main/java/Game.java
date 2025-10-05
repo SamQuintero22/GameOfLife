@@ -47,7 +47,7 @@ public class Game {
     board.setCell(cell.getCoorX(), cell.getCoorY(), cell);
     }
 
-    public void mostrarTablero(){
+    public void mostrarTablero() throws InterruptedException{
 
     for (int i = 0; i < board.totalRows; i++) {
         for (int j = 0; j < board.totalCols; j++) {
@@ -63,27 +63,38 @@ public class Game {
     }
 
     System.out.println(); // espacio extra entre tableros
+    Thread.sleep(300); // esperar 300 ms entre generaciones
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        Game game = new Game(4,4);
+        Game game = new Game(20,20);
 
         game.rules.add(new BirthRule());
         game.rules.add(new DeadRule());
         game.rules.add(new survivorRule());
 
-        game.setCell(new Cell(0, 0, true));
-        game.setCell(new Cell(0,2,true));
-        game.setCell(new Cell(1, 1, true));
+        // --- Glider esquina superior izquierda ---
+        game.setCell(new Cell(0, 1, true));
+        game.setCell(new Cell(1, 2, true));
+        game.setCell(new Cell(2, 0, true));
+        game.setCell(new Cell(2, 1, true));
+        game.setCell(new Cell(2, 2, true));
 
-        game.mostrarTablero();
+        // --- Glider esquina inferior derecha ---
+        game.setCell(new Cell(17, 16, true));
+        game.setCell(new Cell(18, 17, true));
+        game.setCell(new Cell(19, 15, true));
+        game.setCell(new Cell(19, 16, true));
+        game.setCell(new Cell(19, 17, true));
 
-        game.nextGeneration();
 
-        game.mostrarTablero();
-        
+
+        while (true) {
+            game.mostrarTablero();
+            game.nextGeneration(); // tu método para calcular la siguiente generación
+        }
 
     }
 }
