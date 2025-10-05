@@ -27,10 +27,8 @@ Ajustar parámetros como tamaño de la cuadrícula y velocidad de actualización
 
 # Características
 
-Simulación paso a paso o automática.
+* Simulación automática.
 
-Personalización del tamaño de la cuadrícula.
+* Personalización del tamaño de la cuadrícula.
 
-Patrones iniciales predefinidos (Glider, Oscillator, etc.).
-
-Reinicio de la simulación en cualquier momento.
+* Reinicio de la simulación en cualquier momento.
