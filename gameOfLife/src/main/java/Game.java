@@ -75,14 +75,14 @@ public class Game {
         game.rules.add(new DeadRule());
         game.rules.add(new survivorRule());
 
-        // --- Glider esquina superior izquierda ---
+        // --- Esquina superior izquierda ---
         game.setCell(new Cell(0, 1, true));
         game.setCell(new Cell(1, 2, true));
         game.setCell(new Cell(2, 0, true));
         game.setCell(new Cell(2, 1, true));
         game.setCell(new Cell(2, 2, true));
 
-        // --- Glider esquina inferior derecha ---
+        // --- Esquina inferior derecha ---
         game.setCell(new Cell(17, 16, true));
         game.setCell(new Cell(18, 17, true));
         game.setCell(new Cell(19, 15, true));
@@ -93,7 +93,7 @@ public class Game {
 
         while (true) {
             game.mostrarTablero();
-            game.nextGeneration(); // tu método para calcular la siguiente generación
+            game.nextGeneration(); 
         }
 
     }
