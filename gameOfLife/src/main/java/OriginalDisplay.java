@@ -25,13 +25,14 @@ public class OriginalDisplay implements DisplayElement, Observer{
         for (int row = 0; row < totalRows; row++) {
             for (int col = 0; col < totalCols; col++) {
                 Cell cell = board.getCell(row, col);
-                System.out.println(cell.toString() + " "); 
-    
+                System.out.print(cell.getSymbol() + " "); 
             }
-
             System.out.println();
 
         }
+
+            System.out.println(); 
     }
+
 
 }

@@ -2,7 +2,7 @@
 //2. Cualquier célula viva con más de tres vecinas vivas muere, como si se debiera a la sobrepoblación.
 
 
-public class DeadRule implements Rule{
+public class DeadRule implements RuleStrategy{
 
     @Override
     public boolean canApply(Cell cell, int neighboursLive) {

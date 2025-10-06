@@ -1,7 +1,7 @@
 //4. Cualquier célula muerta con exactamente tres vecinas vivas se convierte en una célula viva.
 
 
-public class BirthRule implements Rule {
+public class BirthRule implements RuleStrategy {
     
     @Override
     public boolean canApply(Cell cell, int neighboursLive) {

@@ -27,9 +27,8 @@ public class Cell{
         return !this.estadoVital;
     }
 
-    public String getColoredSymbol() {
-    String symbol = isAlive() ? "●" : ".";
-    return symbol;
+    public String getSymbol() {
+    return isAlive() ? "[0]" : "[_]";
   }
 
 

@@ -2,17 +2,17 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Game implements Subject{
-      Board board; 
-      List<Rule> rules;
+      BoardStrategy board; 
+      List<RuleStrategy> rules;
       private List<Observer> observers;
       private int generation;
 
-    public Game(int filas, int columnas){
-
-        board = new Board(filas, columnas);
-        rules = new ArrayList<>();
-        
-    }
+    public Game(BoardStrategy board, List<RuleStrategy> rules) {
+    this.board = board;
+    this.rules = rules;
+    generation = 0;
+    observers = new ArrayList<>();
+  }
 
     public void nextGeneration(){
 
@@ -21,23 +21,38 @@ public class Game implements Subject{
         for (int filas = 0; filas < nuevoBoard.getRowLength(); filas++) {
             
             for (int columnas = 0; columnas < nuevoBoard.getColLength(); columnas++) {
-                
-                for (Rule ruleActual : rules) {
-                    
-                    if(ruleActual.canApply(board.matriz[filas][columnas],
-                    board.countlivingNeighbours(filas,columnas))){
+                Cell celulaActual = board.getCell(filas, columnas);
+                Boolean reglacumplida = false;
+                for (RuleStrategy ruleActual : rules) {
+                    if(ruleActual.canApply(celulaActual,
+                        board.countlivingNeighbours(celulaActual.getCoorX(),celulaActual.getCoorY()))){
 
-                        nuevoBoard.matriz[filas][columnas] = ruleActual.apply(board.matriz[filas][columnas]);
+                        nuevoBoard.setCell(filas, columnas, ruleActual.apply(celulaActual));
+                        reglacumplida = true;    
                         break; //aplico solo una regla a la vez 
                     }
 
-                }
+                }   
+                        if (!reglacumplida) {
+                            nuevoBoard.setCell(filas, columnas, celulaActual); 
+                        }
 
             }
 
         }
 
         board = nuevoBoard;
+        generation++;
+
+    try {
+        // Pausa la ejecución por 1000 milisegundos (1 segundo)
+        Thread.sleep(1000); 
+    } catch (InterruptedException e) {
+        // Maneja la interrupción, si ocurre (p. ej., si el usuario detiene el programa)
+        Thread.currentThread().interrupt(); 
+    }
+
+        notifyObservers();
 
     }
 
@@ -51,17 +66,19 @@ public class Game implements Subject{
 
     }
 
-    public Board getBoard(){
+    public BoardStrategy getBoard(){
 
         return board;
 
     }
 
     public void mostrarTablero(){
-
-    for (int i = 0; i < board.totalRows; i++) {
-        for (int j = 0; j < board.totalCols; j++) {
-            if (board.matriz[i][j] != null && board.matriz[i][j].isAlive()) {
+    int totalRows = board.getRowLength();
+    int totalCols = board.getColLength();
+    for (int row = 0; row < totalRows; row++) {
+        for (int col = 0; col < totalCols; col++) {
+            Cell celula = board.getCell(row, col);
+            if (celula != null && celula.isAlive()) {
                 System.out.print(" O "); // viva
             } else {
                 System.out.print(" . "); // muerta o null
@@ -73,37 +90,6 @@ public class Game implements Subject{
     }
 
     System.out.println(); 
-
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-
-        Game game = new Game(20,20);
-
-        game.rules.add(new BirthRule());
-        game.rules.add(new DeadRule());
-        game.rules.add(new survivorRule());
-
-        // --- Esquina superior izquierda ---
-        game.setCell(new Cell(0, 1, true));
-        game.setCell(new Cell(1, 2, true));
-        game.setCell(new Cell(2, 0, true));
-        game.setCell(new Cell(2, 1, true));
-        game.setCell(new Cell(2, 2, true));
-
-        // --- Esquina inferior derecha ---
-        game.setCell(new Cell(17, 16, true));
-        game.setCell(new Cell(18, 17, true));
-        game.setCell(new Cell(19, 15, true));
-        game.setCell(new Cell(19, 16, true));
-        game.setCell(new Cell(19, 17, true));
-
-
-
-        while (true) {
-            game.mostrarTablero();
-            game.nextGeneration(); 
-        }
 
     }
 
@@ -123,4 +109,39 @@ public class Game implements Subject{
             observerActual.update(); //todos los observers son avisados que hubieron cambios 
         }
     }
+
+    public List<Observer> getObservers(){
+        return observers;
+    }
+
+    public static void main(String[] args) {
+        
+BoardStrategy miBoard = new Board(8, 8);
+        List<RuleStrategy> miRules = new ArrayList<>();
+        miRules.add(new survivorRule());
+        miRules.add(new DeadRule());
+        miRules.add(new BirthRule());
+        System.out.println("Reglas aniadidas:" +  miRules.size());
+
+        Game game = new Game(miBoard, miRules);
+
+        game.setCell(new Cell(1, 2, true));
+        game.setCell(new Cell(2, 3, true));
+        game.setCell(new Cell(3, 1, true));
+        game.setCell(new Cell(3, 2, true));
+        game.setCell(new Cell(3, 3, true));
+
+        ApliedRules aplied = new ApliedRules(game, 5, new PrintOutput());
+        game.registerObserver(aplied);
+        OriginalDisplay original = new OriginalDisplay(game);
+        game.registerObserver(original);
+
+        System.out.println("Observers aniadidos: " + game.getObservers().size());
+
+        while (true) {
+            game.nextGeneration();
+        }
+
+    }
+
 }

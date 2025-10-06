@@ -100,10 +100,18 @@ public class Board implements BoardStrategy {
 
     @Override
     public BoardStrategy copyBoard() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'copyBoard'");
+        int rows = getRowLength();
+    int cols = getColLength();
+    BoardStrategy newBoard = new Board(rows, cols);
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        Cell cell = getCell(row, col);
+        Cell newCell = (cell.isAlive()) ? new Cell(row, col, true)
+            : new Cell(row, col, false);
+        newBoard.setCell(row, col, newCell);
+      }
     }
-
+    return newBoard;
+  }
     
-
 }

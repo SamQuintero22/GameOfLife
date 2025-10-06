@@ -1,4 +1,4 @@
-public interface Rule {
+public interface RuleStrategy {
 
     boolean canApply (Cell cell, int neighbours); //cuando es posible aplicarlas?
 
