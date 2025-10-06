@@ -18,19 +18,31 @@ public class TestGame {
 
         Game game = new Game(miBoard, miRules);
 
-        game.setCell(new Cell(1, 4, true));
-        game.setCell(new Cell(2, 4, true));
+        game.setCell(new Cell(1, 2, true));
         game.setCell(new Cell(2, 3, true));
+        game.setCell(new Cell(3, 1, true));
+        game.setCell(new Cell(3, 2, true));
+        game.setCell(new Cell(3, 3, true));
 
-        ApliedRules aplied = new ApliedRules(game, 5, new PrintOutput());
-        game.registerObserver(aplied);
+
+        ApliedRules aplied = new ApliedRules(game, 3, new PrintOutput());
         OriginalDisplay original = new OriginalDisplay(game);
+
+
+        game.registerObserver(aplied);
         game.registerObserver(original);
 
         System.out.println("Observers aniadidos: " + game.getObservers().size());
 
+
+
+
         game.nextGeneration();
+
+
         game.nextGeneration();
+
+
         game.nextGeneration();
 
 }

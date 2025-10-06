@@ -20,7 +20,7 @@ public class ApliedRules implements DisplayElement, Observer{
     public void update() {
         int totalRows = actualBoard.getRowLength();
         int totalCols = actualBoard.getColLength();
-
+        actualIteration++;
         BoardStrategy newboard = game.getBoard().copyBoard();
         actualRules = "";
 
