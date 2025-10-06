@@ -45,8 +45,8 @@ public class Game implements Subject{
         generation++;
 
     try {
-        // Pausa la ejecución por 1000 milisegundos (1 segundo)
-        Thread.sleep(1000); 
+        // Pausa la ejecución por 500 milisegundos (medio segundo)
+        Thread.sleep(500); 
     } catch (InterruptedException e) {
         // Maneja la interrupción, si ocurre (p. ej., si el usuario detiene el programa)
         Thread.currentThread().interrupt(); 
@@ -106,7 +106,7 @@ public class Game implements Subject{
     @Override
     public void notifyObservers() {
         for (Observer observerActual : observers) {
-            observerActual.update(); //todos los observers son avisados que hubieron cambios 
+            observerActual.update();
         }
     }
 
