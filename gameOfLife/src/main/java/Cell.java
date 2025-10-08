@@ -1,14 +1,16 @@
 public class Cell{
 
     boolean estadoVital; 
-    int coorX;
-    int coorY;
+    private int coorX;
+    private int coorY;
+    private Colors color;
 
-    public Cell(int filaCelula, int columnaCelula, boolean estadoVital){
+    public Cell(int filaCelula, int columnaCelula, boolean estadoVital, Colors color){
 
         this.coorX = filaCelula;
         this.coorY = columnaCelula;
         this.estadoVital = estadoVital;
+        this.color = color;
     }
 
     public int getCoorX(){
@@ -17,6 +19,14 @@ public class Cell{
 
     public int getCoorY(){
         return coorY;
+    }
+
+    public Colors getColor(){
+        return color;
+    }
+
+    public void setColor(Colors color){
+        this.color = color;
     }
 
     public boolean isAlive(){
@@ -28,7 +38,8 @@ public class Cell{
     }
 
     public String getSymbol() {
-    return isAlive() ? "[0]" : "[_]";
+    String symbol = isAlive() ? "[#]" : "[_]";
+    return color.getCodigoColor() + symbol + "\u001B[0m";
   }
 
 

@@ -16,7 +16,7 @@ public class Game implements Subject{
 
     public void nextGeneration(){
 
-        Board nuevoBoard = new Board(board.getRowLength(), board.getColLength());
+        MatrizBoard nuevoBoard = new MatrizBoard(board.getRowLength(), board.getColLength());
 
         for (int filas = 0; filas < nuevoBoard.getRowLength(); filas++) {
             
@@ -116,7 +116,7 @@ public class Game implements Subject{
 
     public static void main(String[] args) {
         
-BoardStrategy miBoard = new Board(8, 8);
+BoardStrategy miBoard = new MatrizBoard(8, 8);
         List<RuleStrategy> miRules = new ArrayList<>();
         miRules.add(new survivorRule());
         miRules.add(new DeadRule());
@@ -125,16 +125,20 @@ BoardStrategy miBoard = new Board(8, 8);
 
         Game game = new Game(miBoard, miRules);
 
-        game.setCell(new Cell(1, 2, true));
-        game.setCell(new Cell(2, 3, true));
-        game.setCell(new Cell(3, 1, true));
-        game.setCell(new Cell(3, 2, true));
-        game.setCell(new Cell(3, 3, true));
+        game.setCell(new Cell(1, 2, true,Colors.NEUTRO));
+        game.setCell(new Cell(2, 3, true,Colors.NEUTRO));
+        game.setCell(new Cell(3, 1, true,Colors.NEUTRO));
+        game.setCell(new Cell(3, 2, true,Colors.NEUTRO));
+        game.setCell(new Cell(3, 3, true,Colors.NEUTRO));
 
-        ApliedRules aplied = new ApliedRules(game, 5, new PrintOutput());
+
+
+        ApliedRulesDisplay aplied = new ApliedRulesDisplay(game, 5, new PrintOutput());
         game.registerObserver(aplied);
-        OriginalDisplay original = new OriginalDisplay(game);
-        game.registerObserver(original);
+        WhiteAndBLackDisplay WAB = new WhiteAndBLackDisplay(game);
+        game.registerObserver(WAB);
+        ColorizedDisplay colores = new ColorizedDisplay(game);
+        game.registerObserver(colores);
 
         System.out.println("Observers aniadidos: " + game.getObservers().size());
 

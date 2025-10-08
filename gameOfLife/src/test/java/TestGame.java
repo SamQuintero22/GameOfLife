@@ -9,7 +9,7 @@ public class TestGame {
     
     @Test 
     public void GameOfLife(){
-        BoardStrategy miBoard = new Board(5, 8);
+        BoardStrategy miBoard = new MatrizBoard(5, 8);
         List<RuleStrategy> miRules = new ArrayList<>();
         miRules.add(new survivorRule());
         miRules.add(new DeadRule());
@@ -18,25 +18,29 @@ public class TestGame {
 
         Game game = new Game(miBoard, miRules);
 
-        game.setCell(new Cell(1, 2, true));
-        game.setCell(new Cell(2, 3, true));
-        game.setCell(new Cell(3, 1, true));
-        game.setCell(new Cell(3, 2, true));
-        game.setCell(new Cell(3, 3, true));
+        game.setCell(new Cell(1, 2, true,Colors.NEUTRO));
+        game.setCell(new Cell(2, 3, true,Colors.NEUTRO));
+        game.setCell(new Cell(3, 1, true,Colors.NEUTRO));
+        game.setCell(new Cell(3, 2, true,Colors.NEUTRO));
+        game.setCell(new Cell(3, 3, true,Colors.NEUTRO));
 
 
-        ApliedRules aplied = new ApliedRules(game, 3, new PrintOutput());
+        ApliedRulesDisplay aplied = new ApliedRulesDisplay(game, 3, new PrintOutput());
         OriginalDisplay original = new OriginalDisplay(game);
+        BlackAndWhiteDisplay BAW = new BlackAndWhiteDisplay(game);
+        WhiteAndBLackDisplay WAB = new WhiteAndBLackDisplay(game);
+        ColorizedDisplay colores = new ColorizedDisplay(game);
 
 
         game.registerObserver(aplied);
         game.registerObserver(original);
+        game.registerObserver(BAW);
+        game.registerObserver(WAB);
+        game.registerObserver(colores);
+
 
         System.out.println("Observers aniadidos: " + game.getObservers().size());
 
-
-
-
         game.nextGeneration();
 
 
@@ -44,8 +48,9 @@ public class TestGame {
 
 
         game.nextGeneration();
+    
 
-}
+    }
 
 
 

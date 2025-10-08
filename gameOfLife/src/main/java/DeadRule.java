@@ -21,7 +21,7 @@ public class DeadRule implements RuleStrategy{
 
     @Override
     public Cell apply(Cell cell) {
-        return new Cell(cell.getCoorX(), cell.getCoorY(),false);
+        return new Cell(cell.getCoorX(), cell.getCoorY(),false,Colors.NEUTRO);
     }
     
 }
